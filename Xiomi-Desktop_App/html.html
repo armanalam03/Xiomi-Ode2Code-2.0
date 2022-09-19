@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="./payment/payment.css">
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- QR CODE SCRIPTS -->
+    <script type= "text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type= "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+    <script type= "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP</title>
+</head>
+<body>
+
+    <div class="login_container" id="login_container">
+        <div class="xiomi">
+            <img src="./images/mi logo.png" class="logo">
+            <span class="app_name">Store</span>
+        </div>
+        <form class="row g-3 login_form" id="login_form">
+            <div class="col-12">
+                <label for="inputEmail4" class="login_label">ID:&nbsp;</label>
+                <input type="text" class="login_input" id="id" >
+            </div>
+            <div class="col-12">
+                <label for="inputPassword4" class="login_label">Password:&nbsp;</label>
+                <input type="text" class="login_input" id="pass" >
+            </div>
+        </form>
+        <span class="login_btn" id="login_btn">Login</span>
+    </div>
+
+    <div class="container blur" id="container">
+        
+        <section>
+
+            <div class="navbar">
+                <div class="xiomi">
+                    <img src="./images/mi logo.png" class="logo">
+                    <span class="app_name">Store</span>
+                </div>
+                <input type="search" name="Search" id="searchbar" placeholder="Search">
+            </div>
+
+            <div class="products_container" id="products_container"></div>
+            <template product-template>
+            <div class="product">
+                <img class="product_img" src="" product-img>
+                <span class="product_name" product-name></span>
+                <div class="storage_color">
+                    <span class="product_storage" product-storage></span>
+                    <span class="product_color" product-color></span>
+                </div>
+                <span class="product_price" product-price></span>
+                <div class="add_btn">
+                    <i class='bx bx-shopping-bag add_btn_icon'></i>
+                </div>
+            </div> 
+            </template>
+            
+        </section>
+
+        <div class="cart_container">
+            <div class="cart_header">
+                <i class='bx bx-shopping-bag bag_icon'></i>
+                <span>Cart</span>
+            </div>
+            <div class="cart_items_container"> 
+                
+            </div>
+            <div class="cart_footer">
+                <div class="cart_total_container">
+                    <h4>Total: </h4>
+                    <span class="amount" id="amount"></span>
+
+                </div>
+                <div class="scan_btn" id="scan_btn">
+                    <i class='bx bx-qr-scan scan_icon'></i>
+                    <span class="scan_txt">Add Item</span>
+                </div>
+                <div class="checkout_btn" id="checkout_btn">
+                    <span>CHECKOUT</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- QR CODE CONTAINER -->
+    <div class="qr-hidden" id="qr-code-container">
+        <button class="close" id="qr-close">X</button>
+        <video id="preview" width="300px" height="300px"></video>
+        <span class="qr-txt">Place QR code inside container</span>
+    </div>
+
+    <!-- PAYMENT CONTAINER -->
+    <div class="info-payment-container info-hidden" id="info-payment-container">
+        <div class="customer_details">
+            <span class="heading">Customer Details</span>
+            <form class="row g-3">
+                <div class="col-12">
+                <label class="form-label">Name *</label>
+                <input type="text" class="form-control" id="customer_name" >
+                </div>
+                <div class="col-12">
+                <label class="form-label">Phone Number *</label>
+                <input type="number" class="form-control" id="customer_no" >
+                </div>
+                <div class="col-12">
+                <label class="form-label">Email ID *</label>
+                <input type="email" class="form-control" id="customer_email" placeholder="example@gmail.com" required>
+                </div>
+                <div class="col-md-6">
+                <label for="inputState" class="form-label">Purchase Type</label>
+                <select id="inputState" class="form-select">
+                    <option selected>Store Purchase</option>
+                    <option>Home Delivery</option>
+                </select>
+                </div>
+            </form>
+        </div>
+        <div class="payment_container">
+            <button class="close" id="payment-close">X</button>
+            <span class="heading">Payment</span>
+            <div class="col-12">
+                <label class="form-label">Cash &nbsp;</label>
+                <input type="checkbox" id="cash-check">
+            </div>
+            <form class="row g-3" id="payment-form">
+                <div class="col-12">
+                <label class="form-label">Card Number *</label>
+                <input type="number" class="form-control" id="card_number" >
+                </div>
+                <div class="col-md-4">
+                <label class="form-label">Expiry Date *</label>
+                <input type="number" class="form-control" id="expiry_date" >
+                </div>
+                <div class="col-md-4">
+                <label class="form-label">CVV *</label>
+                <input type="number" class="form-control" id="cvv">
+                </div>
+            </form>
+                <div class="col-12">
+                <button type="submit" class="btn btn-primary" id="pay-btn">Pay</button>
+                </div>
+        </div>
+    </div>
+    <script src="js.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
