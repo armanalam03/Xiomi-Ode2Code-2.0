@@ -1,6 +1,7 @@
 ﻿# Xiomi-Ode2Code-2.0  
 This documentation is for Desktop App.  
 For full code zip files and demo videos visit: https://drive.google.com/drive/folders/1XGIicLEaUv1tK6gFIdXLAgyvcgpYG5lb?usp=sharing   
+> App is made using Electronjs framework. 
 ## Steps:  
 1) Download all the codes from this repository.  
 2) Run the following commands:  
